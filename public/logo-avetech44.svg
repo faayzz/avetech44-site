@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 150" role="img" aria-labelledby="title desc">
+  <title id="title">AvéTech44</title>
+  <desc id="desc">AvéTech44 — Informatique, téléphonie, gaming</desc>
+  <rect width="900" height="180" fill="#ffffff"/>
+  <text x="28" y="75" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="800" letter-spacing="-4"><tspan fill="#111318">Avé</tspan><tspan fill="#f04416">Tech44</tspan></text>
+  <text x="32" y="122" fill="#111318" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="500" letter-spacing="2">INFORMATIQUE TELEPHONE GAMING</text>
+</svg>
