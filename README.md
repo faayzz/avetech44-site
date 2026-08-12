@@ -21,7 +21,7 @@ Le site ne nécessite pas de base de données, PostgreSQL, Drizzle, Resend ou Go
 
 La page `/contact` ne contient plus de formulaire. Elle indique simplement les deux moyens de contact :
 
-- Appeler le `06 95 45 07 71`.
+- Appeler le `02 59 15 01 75`.
 - Venir à l’atelier au `26 rue des Palmiers, 44850 Ligné`.
 
 Le bouton d’adresse utilise directement ce lien Google Maps :
@@ -32,20 +32,16 @@ https://maps.app.goo.gl/d4fB7NpwH1VduaJFA?g_st=ic
 
 ## Changer le numéro facilement
 
-Modifier uniquement ce fichier :
+Dans Vercel, allez dans **Settings > Environment Variables** et ajoutez ou modifiez :
 
-```text
-src/lib/site-config.ts
+```env
+NEXT_PUBLIC_PHONE_DISPLAY=02 59 15 01 75
+NEXT_PUBLIC_PHONE_HREF=tel:+33259150175
 ```
 
-Changer ces deux lignes :
+Remplacez les deux valeurs par le prochain numéro, puis redéployez le site. Le numéro se mettra à jour dans le header, le footer, la page Contact, l’accueil et le suivi.
 
-```ts
-phoneDisplay: "06 95 45 07 71",
-phoneHref: "tel:+33695450771",
-```
-
-Le numéro se met à jour dans le header, le footer, la page Contact et le suivi.
+En local, mettez les mêmes variables dans le fichier `.env` puis redémarrez `npm run dev`.
 
 ## Suivi des réparations
 

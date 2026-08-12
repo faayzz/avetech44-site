@@ -48,7 +48,6 @@ button:disabled { cursor: wait; opacity: .66; }
 .topline-inner { min-height: 34px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .topline-inner span, .topline-inner a { display: inline-flex; align-items: center; gap: 7px; }
 .topline-inner a:hover { color: #fff; }
-.topline-dot { width: 6px; height: 6px; border-radius: 50%; background: #61c899; box-shadow: 0 0 0 4px rgba(97, 200, 153, .12); }
 .site-header { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, .94); border-bottom: 1px solid rgba(225, 224, 219, .82); backdrop-filter: blur(14px); }
 .header-inner { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .brand { display: inline-flex; align-items: center; min-width: max-content; }
