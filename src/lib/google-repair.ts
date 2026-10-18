@@ -157,7 +157,24 @@ export async function lookupRepair(name: string, locker: string): Promise<Repair
     return namesMatch(searchName, contactF) || namesMatch(searchName, nomG) || namesMatch(searchName, fullNameGH);
   });
 
-  if (!row) return { message: "Aucun dossier trouvé. Vérifiez votre nom et numéro de casier.", status: 404 };
+    if (!row) return { message: "Aucun dossier trouvé. Vérifiez votre nom et numéro de casier.", status: 404 };
+
+  // Extraire Nom + Prénom proprement
+  const contactF = (row.cells[5] || "").trim();
+  const nomG = (row.cells[6] || "").trim();
+  const prenomH = (row.cells[7] || "").trim();
+
+  let clientName = "";
+  if (nomG) {
+    clientName = prenomH ? `${prenomH} ${nomG}` : nomG;
+  } else {
+    const parts = contactF.split(/\s+-\s+/).map((p) => p.trim()).filter(Boolean);
+    clientName = parts.length >= 2 ? `${parts[1]} ${parts[0]}` : parts[0] || "";
+  }
+
+  // Date de mise à jour (colonne F si c'est une date, sinon vide)
+  const isDate = /\d{2}\/\d{2}\/\d{4}/.test(contactF);
+  const updatedAt = isDate ? contactF : "Mise à jour récente";
 
   const rawStatus = (row.cells[1] || "En cours").trim();
   const status = statusFrom(rawStatus);
@@ -165,7 +182,6 @@ export async function lookupRepair(name: string, locker: string): Promise<Repair
   const statusTones: Record<StatusKey, "orange" | "green" | "red" | "blue"> = { received: "orange", repairing: "orange", delayed: "red", ready: "green", cancelled: "red" };
   const device = (row.cells[3] || "").trim() || "Appareil confié à l'atelier";
   const detail = (row.cells[4] || "").trim() || (status === "ready" ? "Votre appareil est prêt à être récupéré en boutique." : status === "cancelled" ? "Votre dossier a été annulé." : "Votre dossier est bien suivi.");
-  const updatedAt = (row.cells[5] || "").trim() || "Mise à jour récente";
 
-  return { record: { device, status, statusLabel: statusLabels[status], statusTone: statusTones[status], detail, updatedAt, history: makeHistory(status, updatedAt) } };
+  return { record: { device, status, statusLabel: statusLabels[status], statusTone: statusTones[status], detail, updatedAt: `${clientName} · ${updatedAt}`, history: makeHistory(status, updatedAt) } };
 }
