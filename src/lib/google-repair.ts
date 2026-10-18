@@ -205,7 +205,6 @@ export async function lookupRepair(name: string, locker: string): Promise<Repair
   const fullName = `${nom} ${prenom}`.trim();
   return (namesMatch(searchName, contact) || namesMatch(searchName, fullName) || namesMatch(searchName, nom)) && lockerMatches(item, searchLocker);
 });
-  });
   if (!row) return { message: "Aucun dossier trouvé.", status: 404 };
 
   const rawStatus = column(row, ["statut", "status", "etat", "état", "avancement"], 1) || "En cours";
