@@ -198,11 +198,15 @@ export async function lookupRepair(name: string, locker: string): Promise<Repair
   }
   if (rows.length === 0) return { message: `La feuille de réparations est vide ou inaccessible. Vérifiez le partage et le gid ${process.env.GOOGLE_SHEET_GID || DEFAULT_REPAIR_SHEET_GID}.`, status: 503 };
 
-  const row = rows.find((item) => {
-    const contact = column(item, ["contact", "client", "nom du client", "coordonnees", "coordonnées"], 5);
-    return namesMatch(searchName, contact) && lockerMatches(item, searchLocker);
+ const row = rows.find((item) => {
+  const contact = column(item, ["contact", "client", "nom du client", "coordonnees", "coordonnées"], 5);
+  const nom = item.cells[6] || "";
+  const prenom = item.cells[7] || "";
+  const fullName = `${nom} ${prenom}`.trim();
+  return (namesMatch(searchName, contact) || namesMatch(searchName, fullName) || namesMatch(searchName, nom)) && lockerMatches(item, searchLocker);
+});
   });
-  if (!row) return { message: "Aucun dossier trouvé. Vérifiez le nom présent dans la colonne F et le numéro de casier.", status: 404 };
+  if (!row) return { message: "Aucun dossier trouvé.", status: 404 };
 
   const rawStatus = column(row, ["statut", "status", "etat", "état", "avancement"], 1) || "En cours";
   const status = statusFrom(rawStatus);
